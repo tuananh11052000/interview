@@ -4,16 +4,15 @@ import Contract from 'web3-eth-contract';
 import {getInterface} from './interface.js';
 
 function calculate_x(k1,k2,k3,k4,k5,k6){
-  if(k2*k4*k6 <= Math.pow(1.003,3)*k1*k3*k5){
+  if(Math.pow(0.997,3)*k2*k4*k6 < k1*k3*k5){
     console.log("We advise you not to invest at this time")
   }
   else{
-    let safeValueOfX = (k2*k4*k6-Math.pow(1.003,3)*k1*k3*k5)/(Math.pow(1.003,2)*k3*k5+1.003*k2*k5+k2*k4);
-    let x_ = (1.003*Math.sqrt(1.003*k1*k2*k3*k4*k5*k6) - Math.pow(1.003,3)*k1*k3*k5)/(Math.pow(1.003,2)*k3*k5+1.003*k2*k5+k2*k4);//so WETH bo ra
-    let x = x_/1.003;
-    let benefit = (k2*k4*k6*x)/(Math.pow(1.003,2)*k1*k3*k5+(Math.pow(1.003,2)*k3*k5+1.003*k2*k5+k2*k4)*x) - 1.003*x;
+    let safeValueOfX = (Math.pow(0.997,3)*k2*k4*k6-k1*k3*k5)/(0.997*(k3*k5+0.997*k2*k5+Math.pow(0.997,2)*k2*k4));
+    let x = (Math.sqrt(Math.pow(0.997,3)*k1*k2*k3*k4*k5*k6)-k1*k3*k5)/(0.997*k3*k5 + Math.pow(0.997,2)*k2*k5 +Math.pow(0.997,3)*k2*k4);
+    let benefit = (Math.pow(0.997,3)*k2*k4*k6*x)/(k1*k3*k5+(0.997*k3*k5 + Math.pow(0.997,2)*k2*k5+Math.pow(0.997,3)*k2*k4)*x)-x
     console.log(`the value of x so that y > x is: 0 < x < ${safeValueOfX}`)
-    console.log(`the value of x for maximum benefit is: ${x_} WETH`)
+    console.log(`the value of x for maximum benefit is: ${x} WETH`)
     console.log(`maximum-benefit is: ${benefit}`)
   }
 }
